@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ESP32 Smart Messenger</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>📟 Smart Messenger</h1>
+
+      <div class="card">
+        <h2>Status</h2>
+
+        <div class="status">
+          <span id="brokerStatus" class="offline"></span>
+
+          <span id="brokerText">Disconnected</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <label>Sender</label>
+
+        <input type="text" id="sender" placeholder="Masukkan nama" />
+
+        <label>Message</label>
+
+        <textarea id="message" rows="5" placeholder="Tulis pesan..."></textarea>
+
+        <button id="sendBtn">🚀 Send Message</button>
+      </div>
+
+      <div class="card">
+        <h2>ESP32</h2>
+
+        <p>
+          Status :
+
+          <span id="espStatus"> Offline </span>
+        </p>
+
+        <p>
+          Read Status :
+
+          <span id="readStatus"> Waiting... </span>
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Last Message</h2>
+
+        <div id="lastMessage">Belum ada pesan</div>
+      </div>
+    </div>
+
+    <script src="mqtt.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
