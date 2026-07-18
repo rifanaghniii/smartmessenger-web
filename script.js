@@ -1,79 +1,104 @@
-//=============================
-// HiveMQ WebSocket
-//=============================
+//=====================================================
+// ELEMENT
+//=====================================================
 
-const options = {
-  connectTimeout: 4000,
+const brokerStatus = document.getElementById("brokerStatus");
+const brokerText = document.getElementById("brokerText");
 
-  clientId: "web_" + Math.random().toString(16).substr(2, 8),
+const espDot = document.getElementById("espDot");
+const espStatus = document.getElementById("espStatus");
 
-  username: "rfnaghniii",
+const sendBtn = document.getElementById("sendBtn");
 
-  password: "aingrifan",
+const replyContainer = document.getElementById("replyContainer");
 
-  clean: true,
-};
+//=====================================================
+// GET CURRENT TIME
+//=====================================================
 
-//=============================
+function getCurrentTime() {
+  const now = new Date();
 
-const client = mqtt.connect(
-  "wss://3444902e330d4114a146f9d5700b464b.s1.eu.hivemq.cloud:8884/mqtt",
+  return now.toLocaleTimeString([], {
+    hour: "2-digit",
 
-  options,
-);
+    minute: "2-digit",
+  });
+}
 
-//=============================
+//=====================================================
+// ADD REPLY BUBBLE
+//=====================================================
 
-client.on("connect", () => {
-  console.log("MQTT Connected");
+function addReplyBubble(sender, message) {
+  const bubble = document.createElement("div");
 
-  document.getElementById("brokerStatus").className = "online";
+  bubble.className = "reply-bubble";
 
-  document.getElementById("brokerText").innerHTML = "Connected";
+  bubble.innerHTML = `
+        <p>
 
-  client.subscribe("rifan/status");
+            <b>${sender}</b>
 
-  client.subscribe("rifan/device");
+            <br><br>
+
+            ${message}
+
+        </p>
+
+        <div class="reply-time">
+
+            ❤️ ${getCurrentTime()}
+
+        </div>
+        `;
+
+  replyContainer.appendChild(bubble);
+
+  replyContainer.scrollTop = replyContainer.scrollHeight;
+}
+
+//=====================================================
+// TOAST
+//=====================================================
+
+function showToast(text) {
+  const toast = document.createElement("div");
+
+  toast.className = "toast";
+
+  toast.innerHTML = text;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 100);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3200);
+}
+
+//=====================================================
+// SEND SUCCESS
+//=====================================================
+
+sendBtn.addEventListener("click", () => {
+  setTimeout(() => {
+    showToast("❤️ Pesan berhasil dikirim");
+  }, 300);
 });
 
-//=============================
+//=====================================================
+// DEMO
+//=====================================================
 
-client.on("message", (topic, message) => {
-  message = message.toString();
-
-  console.log(topic, message);
-
-  if (topic == "rifan/device") {
-    document.getElementById("espStatus").innerHTML = message;
-  }
-
-  if (topic == "rifan/status") {
-    document.getElementById("readStatus").innerHTML = message;
-  }
-});
-
-//=============================
-
-client.on("error", (err) => {
-  console.log(err);
-});
-
-//=============================
-
-document.getElementById("sendBtn").onclick = () => {
-  let sender = document.getElementById("sender").value;
-
-  let msg = document.getElementById("message").value;
-
-  //sementara kirim text biasa
-
-  const payload = {
-    sender: sender,
-    message: msg,
-  };
-
-  client.publish("rifan/message", JSON.stringify(payload));
-
-  document.getElementById("lastMessage").innerHTML =
-    "<b>" + sender + "</b><br><br>" + msg;
-};
+// addReplyBubble(
+//     "ESP32",
+//     "Aku juga sayang kamu ❤️"
+// );

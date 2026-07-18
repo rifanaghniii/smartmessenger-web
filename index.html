@@ -5,61 +5,79 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>ESP32 Smart Messenger</title>
+    <title>❤️ Smart Messenger</title>
 
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div class="container">
-      <h1>📟 Smart Messenger</h1>
+    <!-- ================= HEADER ================= -->
 
-      <div class="card">
-        <h2>Status</h2>
+    <header>
+      <div class="logo">❤️ Smart Messenger</div>
 
-        <div class="status">
-          <span id="brokerStatus" class="offline"></span>
+      <div class="status-container">
+        <div class="status-card">
+          <span class="dot offline" id="brokerStatus"></span>
 
           <span id="brokerText">Disconnected</span>
         </div>
+
+        <div class="status-card">
+          <span class="dot offline" id="espDot"></span>
+
+          <span id="espStatus">Offline</span>
+        </div>
       </div>
+    </header>
 
-      <div class="card">
-        <label>Sender</label>
+    <!-- ================= CONTENT ================= -->
 
-        <input type="text" id="sender" placeholder="Masukkan nama" />
+    <main>
+      <!-- LEFT -->
 
-        <label>Message</label>
+      <section class="card send-card">
+        <h2>💌 Kirim Pesan</h2>
 
-        <textarea id="message" rows="5" placeholder="Tulis pesan..."></textarea>
+        <label> Nama Pengirim </label>
 
-        <button id="sendBtn">🚀 Send Message</button>
-      </div>
+        <input type="text" id="sender" placeholder="Contoh : Babyyy" />
 
-      <div class="card">
-        <h2>ESP32</h2>
+        <label> Pesan </label>
 
-        <p>
-          Status :
+        <textarea
+          id="message"
+          placeholder="Tulis pesan romantis disini..."
+        ></textarea>
 
-          <span id="espStatus"> Offline </span>
-        </p>
+        <button id="sendBtn">🚀 Kirim Pesan</button>
 
-        <p>
-          Read Status :
+        <div class="last-send">
+          <h3>Pesan Terakhir</h3>
 
-          <span id="readStatus"> Waiting... </span>
-        </p>
-      </div>
+          <div id="lastMessage">Belum ada pesan.</div>
+        </div>
+      </section>
 
-      <div class="card">
-        <h2>Last Message</h2>
+      <!-- RIGHT -->
 
-        <div id="lastMessage">Belum ada pesan</div>
-      </div>
-    </div>
+      <section class="card reply-card">
+        <h2>❤️ Balasan ESP32</h2>
+
+        <div class="reply-container" id="replyContainer"></div>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>Smart Messenger © 2026</footer>
+
+    <!-- ================= MQTT ================= -->
 
     <script src="mqtt.min.js"></script>
+
+    <script src="mqtt.js"></script>
+
     <script src="script.js"></script>
   </body>
 </html>
